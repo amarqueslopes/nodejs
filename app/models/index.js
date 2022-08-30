@@ -15,4 +15,10 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.invoices = require("./invoice.model.js")(sequelize, Sequelize);
+db.products = require("./product.model.js")(sequelize, Sequelize);
+db.invoices.hasMany(db.products, { as: "products" });
+db.products.belongsTo(db.invoices, {
+  foreignKey: "invoiceId",
+  as: "invoice",
+});
 module.exports = db;

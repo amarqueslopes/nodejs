@@ -1,5 +1,6 @@
 const models = require("../models");
 const InvoiceModel = models.invoices;
+const ProductModel = models.products;
 const Op = models.Sequelize.Op;
 
 exports.create = (invoice, res) => {
@@ -15,9 +16,9 @@ exports.create = (invoice, res) => {
         });
 };
 
-exports.findAll = (clientName, res) => {
-    const condition = clientName ? { clientName: { [Op.like]: `%${clientName}%` } } : null;
-    InvoiceModel.findAll({ where: condition })
+exports.findAll = (clientNames, res) => {
+    const condition = clientNames ? { clientName: { [Op.in]: clientNames.split(',') } } : null;
+    InvoiceModel.findAll({ where: condition, include: { model: ProductModel, as: 'products' }})
         .then(data => {
             res.send(data);
         })
@@ -30,7 +31,7 @@ exports.findAll = (clientName, res) => {
 };
 
 exports.findByPk = (id, res) => {
-    InvoiceModel.findByPk(id)
+    InvoiceModel.findByPk(id, { include: products })
         .then(data => {
             if (data) {
                 res.send(data);

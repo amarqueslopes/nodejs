@@ -3,7 +3,6 @@ const InvoiceFactory = require("../factories/invoice.factory.js");
 const InvoiceValidator = require("../validators/invoice.validator.js");
 
 exports.create = (req, res) => {
-    console.log(req.body);
     if (!InvoiceValidator.validate(req.body.invoiceNumber, req.body.clientName)) {
         res.status(400).send({
             message: "Content can not be empty!"
@@ -22,8 +21,8 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    const clientName = req.query.clientName;
-    InvoiceHelper.findAll(clientName, res);
+    const clientNames = req.query.clientNames;
+    InvoiceHelper.findAll(clientNames, res);
 };
 
 exports.find = (req, res) => {

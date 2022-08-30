@@ -1,16 +1,16 @@
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize, Datatypes) => {
     const Invoice = sequelize.define("invoice", {
         invoiceNumber: {
-            type: Sequelize.STRING
+            type: Datatypes.STRING
         },
         clientName: {
-            type: Sequelize.STRING
+            type: Datatypes.STRING
         },
         postedDate: {
-            type: Sequelize.DATE
+            type: Datatypes.DATE
         },
         status: {
-            type: Sequelize.STRING
+            type: Datatypes.STRING
         }
     });
     return Invoice;
